@@ -1,0 +1,34 @@
+@startuml
+
+component "kdsl-connector" as Connector <<jar>>
+
+component "kdsl-spec" as Spec <<api>>
+
+component "kdsl-internal" as Direct <<jar>>
+
+component "kdsl-http" as HTTP <<jar>>
+
+component "model" as Model <<core>>
+
+component "rest/graphql" as UI <<core>>
+
+HTTP --|> Spec
+HTTP --> Connector
+Connector ..> UI: maps to
+
+Direct --|> Spec
+Direct --> Model
+
+package "ontrack-extension-xxx" {
+    component "src/dsl" as ExtensionDSL
+    component "src/dsl-http" as ExtensionDSLHttp
+    component "src/dsl-internal" as ExtensionDSLInternal
+
+    ExtensionDSL --> Spec
+    ExtensionDSLHttp --|> ExtensionDSL
+    ExtensionDSLHttp --|> HTTP
+    ExtensionDSLInternal --|> ExtensionDSL
+    ExtensionDSLInternal --|> Model
+}
+
+@enduml
