@@ -35,6 +35,8 @@ include(":ontrack-docs")
 
 // KDSL
 include(":ontrack-kdsl-spec")
+include(":ontrack-kdsl-connector")
+include(":ontrack-kdsl-http")
 
 // Core extensions
 include(":ontrack-extension-ldap")
