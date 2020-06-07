@@ -33,6 +33,9 @@ include(":ontrack-acceptance")
 include(":ontrack-postgresql-migration")
 include(":ontrack-docs")
 
+// KDSL
+include(":ontrack-kdsl-spec")
+
 // Core extensions
 include(":ontrack-extension-ldap")
 include(":ontrack-extension-oidc")

@@ -6,6 +6,9 @@ import com.moowork.gradle.node.npm.NpmInstallTask
 import com.moowork.gradle.node.task.NodeTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.*
 
@@ -129,6 +132,46 @@ class OntrackExtensionPlugin : Plugin<Project> {
             }
             exclude("static/**/*.js")
             exclude("static/**/*.html")
+        }
+
+        /**
+         * Kotlin DSL management
+         */
+
+        val dslDir = target.file("src/dsl")
+        if (dslDir.exists() && dslDir.isDirectory) {
+            val kotlinVersion = Versions.kotlinVersion
+            val javaConvention = target.convention.getPlugin(JavaPluginConvention::class.java)
+            val sourceSets = javaConvention.sourceSets
+            sourceSets.create("dsl")
+
+            val dslImplementation by target.configurations.getting
+
+            target.dependencies {
+                dslImplementation(project(":ontrack-kdsl-spec"))
+                dslImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+                dslImplementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+            }
+
+            val dslJar by target.tasks.registering(Jar::class) {
+                archiveClassifier.set("dsl")
+                from(sourceSets["dsl"].output)
+            }
+
+            target.configure<PublishingExtension> {
+                publications {
+                    maybeCreate<MavenPublication>("mavenCustom").artifact(target.tasks["dslJar"])
+                }
+            }
+
+            target.tasks["assemble"].dependsOn(dslJar)
+
+            val dslConfig by target.configurations.creating
+
+            target.artifacts {
+                add("dslConfig", dslJar)
+            }
+
         }
 
     }
