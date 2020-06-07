@@ -9,6 +9,8 @@ dependencies {
 
     implementation("org.springframework:spring-web")
     implementation("org.springframework.boot:spring-boot")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
 
 val testJar by tasks.registering(Jar::class) {
