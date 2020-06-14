@@ -1,5 +1,6 @@
 <!-- Toolbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-dark mb-3">
+  <!-- Logo -->
   <a class="navbar-brand text-light" [routerLink]="'.'">
     <img
       width="40"
@@ -8,6 +9,11 @@
     />
     Ontrack
   </a>
+  <!-- User info -->
+  <span class="navbar-text text-light ot-action ml-auto">
+      <i class="fas fa-user"></i>
+      Damien Coraboeuf
+  </span>
 </nav>
 
 <router-outlet></router-outlet>
