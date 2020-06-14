@@ -5,11 +5,11 @@
   <i class="fas fa-user"></i>
   {{userName}}
 </span>
-<span id="show-sidebar" class="btn btn-sm btn-dark" title="Displays the user menu.">
+<span id="show-sidebar" class="btn btn-sm btn-dark" title="Displays the user menu." on-click="toggleMenu()">
   <i class="fas fa-bars"></i>
 </span>
 <!-- Side bar menu -->
-<nav id="user-menu" class="user-menu">
+<nav id="user-menu" class="user-menu" [hidden]="!menuBarVisible">
   <div *ngFor="let uiAction of uiActions"
        class="user-menu-item text-light"
        title="{{ uiAction.description }}">

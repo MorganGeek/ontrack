@@ -13,6 +13,8 @@ export class UserMenuComponent implements OnInit {
   userName: string;
   uiActions: [UserMenuUIAction];
 
+  menuBarVisible: boolean = false;
+
   constructor(private apollo: Apollo) {
   }
 
@@ -53,6 +55,10 @@ export class UserMenuComponent implements OnInit {
 
   getUri(uiAction: UserMenuUIAction): string {
     return (uiAction as UserMenuUIURIAction).uri;
+  }
+
+  toggleMenu(): void {
+    this.menuBarVisible = !this.menuBarVisible;
   }
 
 }
