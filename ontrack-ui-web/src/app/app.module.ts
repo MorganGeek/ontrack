@@ -7,11 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import {ToolbarComponent} from "./core/toolbar/toolbar.component";
+import {UserMenuComponent} from "./core/user-menu/user-menu.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    UserMenuComponent
   ],
   imports: [
     BrowserModule,
