@@ -1,4 +1,7 @@
-<span class="navbar-text text-light ot-action">
+<span class="navbar-text text-light" *ngIf="loading">
+  Loading...
+</span>
+<span class="navbar-text text-light ot-action" *ngIf="userName">
     <i class="fas fa-user"></i>
-    Damien Coraboeuf
+    {{userName}}
 </span>

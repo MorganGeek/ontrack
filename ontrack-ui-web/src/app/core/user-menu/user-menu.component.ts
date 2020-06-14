@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Apollo} from "apollo-angular";
+import gql from "graphql-tag";
 
 @Component({
   selector: 'ot-user-menu',
@@ -7,9 +9,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserMenuComponent implements OnInit {
 
-  constructor() { }
+  loading: boolean;
+  userName: string;
 
-  ngOnInit(): void {
+  constructor(private apollo: Apollo) {
   }
 
+  ngOnInit(): void {
+    this.apollo.query<UserMenuResponse>({
+      query: gql`
+        query GetUser {
+          user {
+            account {
+              fullName
+            }
+          }
+        }
+      `,
+    })
+    .subscribe(result => {
+      this.loading = result.loading;
+      this.userName = result.data && result.data.user.account.fullName;
+    });
+  }
+
+}
+
+type UserMenuResponse = {
+  user: UserMenuUser;
+}
+
+type UserMenuUser = {
+  account: UserMenuAccount
+};
+
+type UserMenuAccount = {
+  fullName: string;
 }
