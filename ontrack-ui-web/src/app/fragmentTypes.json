@@ -1,0 +1,45 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "ProjectEntity",
+        "possibleTypes": [
+          {
+            "name": "Branch"
+          },
+          {
+            "name": "Build"
+          },
+          {
+            "name": "Project"
+          },
+          {
+            "name": "PromotionLevel"
+          },
+          {
+            "name": "PromotionRun"
+          },
+          {
+            "name": "ValidationRun"
+          },
+          {
+            "name": "ValidationStamp"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "UIMenuAction",
+        "possibleTypes": [
+          {
+            "name": "UIMenuPageAction"
+          },
+          {
+            "name": "UIMenuURIAction"
+          }
+        ]
+      }
+    ]
+  }
+}

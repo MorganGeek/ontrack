@@ -11,6 +11,7 @@ export class UserMenuComponent implements OnInit {
 
   loading: boolean;
   userName: string;
+  uiActions: [UserMenuUIAction];
 
   constructor(private apollo: Apollo) {
   }
@@ -23,6 +24,18 @@ export class UserMenuComponent implements OnInit {
             account {
               fullName
             }
+            uiMenuActions {
+              id
+              name
+              description
+              icon
+              ... on UIMenuURIAction {
+                uri
+              }
+              ... on UIMenuPageAction {
+                page
+              }
+            }
           }
         }
       `,
@@ -30,6 +43,7 @@ export class UserMenuComponent implements OnInit {
     .subscribe(result => {
       this.loading = result.loading;
       this.userName = result.data && result.data.user.account.fullName;
+      this.uiActions = result.data && result.data.user.uiMenuActions;
     });
   }
 
@@ -41,8 +55,32 @@ type UserMenuResponse = {
 
 type UserMenuUser = {
   account: UserMenuAccount
+  uiMenuActions: [UserMenuUIAction]
 };
 
 type UserMenuAccount = {
   fullName: string;
+}
+
+interface UserMenuUIAction {
+  id: string;
+  name: string;
+  description: string;
+  icon: String;
+}
+
+class UserMenuUIURIAction implements UserMenuUIAction {
+  uri: string;
+  description: string;
+  icon: String;
+  id: string;
+  name: string;
+}
+
+class UserMenuUIPageAction implements UserMenuUIAction {
+  page: string;
+  description: string;
+  icon: String;
+  id: string;
+  name: string;
 }
