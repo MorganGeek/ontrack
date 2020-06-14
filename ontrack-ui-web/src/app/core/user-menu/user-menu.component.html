@@ -6,7 +6,9 @@
   {{userName}}
 </span>
 <span id="show-sidebar" class="btn btn-sm btn-dark" title="Displays the user menu." on-click="toggleMenu()">
-  <i class="fas fa-bars"></i>
+  <i class="fas fa-bars" [ngClass]="{
+    'fa-rotate-90': menuBarVisible
+  }"></i>
 </span>
 <!-- Side bar menu -->
 <nav id="user-menu" class="user-menu" [hidden]="!menuBarVisible">
