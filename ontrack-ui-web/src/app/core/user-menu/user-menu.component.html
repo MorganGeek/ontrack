@@ -10,8 +10,14 @@
 </span>
 <!-- Side bar menu -->
 <nav id="user-menu" class="user-menu">
-  <div *ngFor="let uiAction of uiActions" class="user-menu-item text-light" title="{{ uiAction.description }}">
-    <i class="fas fa-{{ uiAction.icon }}"></i>
-    {{ uiAction.name }}
+  <div *ngFor="let uiAction of uiActions"
+       class="user-menu-item text-light"
+       title="{{ uiAction.description }}">
+    <span *ngIf="isUri(uiAction)">
+      <a href="{{ getUri(uiAction) }}">
+        <i class="fas fa-{{ uiAction.icon }}"></i>
+        {{ uiAction.name }}
+      </a>
+    </span>
   </div>
 </nav>

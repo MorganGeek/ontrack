@@ -5,6 +5,11 @@ $user-menu-width: 250px;
 $user-menu-padding: 0.5em;
 $user-menu-color: black;
 
+$user-menu-item-color-fg: white;
+$user-menu-item-color-bg: $user-menu-color;
+$user-menu-item-color-fg-hover: $user-menu-item-color-bg;
+$user-menu-item-color-bg-hover: $user-menu-item-color-fg;
+
 .user-menu {
   // Position
   width: $user-menu-width;
@@ -20,6 +25,18 @@ $user-menu-color: black;
   background-color: $user-menu-color;
   // A menu item
   .user-menu-item {
+    padding: $user-menu-padding;
+    background-color: $user-menu-item-color-bg;
+    &:hover {
+      background-color: $user-menu-item-color-bg-hover;
+      a {
+        color: $user-menu-item-color-fg-hover;
+      }
+    }
     @include ot-action;
+    a {
+      text-decoration: none;
+      color: $user-menu-item-color-fg;
+    }
   }
 }

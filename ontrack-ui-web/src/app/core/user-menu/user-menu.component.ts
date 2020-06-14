@@ -47,6 +47,14 @@ export class UserMenuComponent implements OnInit {
     });
   }
 
+  isUri(uiAction: UserMenuUIAction): uiAction is UserMenuUIURIAction {
+    return !!(uiAction as UserMenuUIURIAction).uri;
+  }
+
+  getUri(uiAction: UserMenuUIAction): string {
+    return (uiAction as UserMenuUIURIAction).uri;
+  }
+
 }
 
 type UserMenuResponse = {
