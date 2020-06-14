@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 @Component({
   selector: 'ot-user-menu',
   templateUrl: './user-menu.component.html',
-  styleUrls: ['./user-menu.component.less']
+  styleUrls: ['./user-menu.component.scss']
 })
 export class UserMenuComponent implements OnInit {
 
