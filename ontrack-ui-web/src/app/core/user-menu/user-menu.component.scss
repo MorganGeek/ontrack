@@ -1,0 +1,25 @@
+@import "styles";
+
+$user-menu-top: 60px;
+$user-menu-width: 250px;
+$user-menu-padding: 0.5em;
+$user-menu-color: black;
+
+.user-menu {
+  // Position
+  width: $user-menu-width;
+  height: 100%;
+  max-height: 100%;
+  position: fixed;
+  top: $user-menu-top;
+  right: 0;
+  z-index: 999;
+  // Box
+  padding: $user-menu-padding;
+  // Coloring
+  background-color: $user-menu-color;
+  // A menu item
+  .user-menu-item {
+    @include ot-action;
+  }
+}
