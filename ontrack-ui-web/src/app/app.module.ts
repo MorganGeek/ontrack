@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import {ToolbarComponent} from "./core/toolbar/toolbar.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
