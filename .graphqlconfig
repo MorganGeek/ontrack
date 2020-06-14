@@ -1,0 +1,15 @@
+{
+  "name": "Ontrack V4 Schema",
+  "schemaPath": "./ontrack-v4.graphql",
+  "extensions": {
+    "endpoints": {
+      "Local Ontrack": {
+        "url": "http://localhost:8080/graphql",
+        "introspect": true,
+        "headers": {
+          "Authorization": "Basic YWRtaW46YWRtaW4="
+        }
+      }
+    }
+  }
+}

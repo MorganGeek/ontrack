@@ -1,10 +1,12 @@
 package net.nemerosa.ontrack.graphql
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ObjectNode
 import graphql.ExecutionResult
 import net.nemerosa.ontrack.common.UserException
 import net.nemerosa.ontrack.graphql.service.GraphQLService
 import net.nemerosa.ontrack.json.ObjectMapperFactory
+import net.nemerosa.ontrack.json.isNullOrNullNode
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.io.IOException
@@ -70,10 +72,18 @@ class GraphqlController(
      * Request execution (JSON)
      */
     private fun requestAsJson(request: Request): JsonNode {
-        return objectMapper.valueToTree(
-                request(request)
-        )
+        return executionResultToJson(request(request))
+    }
 
+    private fun executionResultToJson(result: ExecutionResult): JsonNode {
+        val json = objectMapper.valueToTree<JsonNode>(result)
+        if (json is ObjectNode) {
+            val errors = json.path("errors")
+            if (errors.isArray && errors.isEmpty) {
+                json.remove("errors")
+            }
+        }
+        return json
     }
 
     /**

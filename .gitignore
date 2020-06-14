@@ -28,3 +28,6 @@ codecov.sh
 ontrack-extension-*/package*.json
 ontrack-extension-*/gulpfile.js
 ontrack-extension-*/node_modules
+
+# JS GraphQL support
+*.graphql
