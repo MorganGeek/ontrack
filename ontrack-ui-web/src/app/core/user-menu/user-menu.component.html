@@ -1,8 +1,17 @@
 <span class="navbar-text text-light" *ngIf="loading">
   Loading...
 </span>
-<span class="navbar-text text-light ot-action" *ngIf="userName">
-    <i class="fas fa-user"></i>
-    {{userName}}
-    {{uiActions}}
+<span class="navbar-text text-light ot-action" *ngIf="userName" title="Current user being logged in.">
+  <i class="fas fa-user"></i>
+  {{userName}}
 </span>
+<span id="show-sidebar" class="btn btn-sm btn-dark" title="Displays the user menu.">
+  <i class="fas fa-bars"></i>
+</span>
+<!-- Side bar menu -->
+<nav id="user-menu" class="user-menu">
+  <div class="user-menu-item" title="Logging out">
+    <i class="fas fa-sign-out-alt"></i>
+    Sign out
+  </div>
+</nav>
