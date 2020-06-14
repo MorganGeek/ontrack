@@ -1,8 +1,36 @@
 package net.nemerosa.ontrack.graphql.support
 
+import graphql.Scalars.GraphQLString
 import graphql.schema.*
 import net.nemerosa.ontrack.graphql.support.GraphqlUtils.stdList
 import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
+
+// ============================================================================
+// Scalar fields
+// ============================================================================
+
+/**
+ * String field based on a direct property
+ */
+fun stringField(
+        property: KProperty1<*, String>,
+        description: String? = null
+) = scalarField(
+        property = property,
+        description = description,
+        baseType = GraphQLString
+)
+
+/**
+ * Scalar field based on a direct property
+ */
+private fun scalarField(property: KProperty1<*, *>, description: String? = null, baseType: GraphQLScalarType): GraphQLFieldDefinition =
+        GraphQLFieldDefinition.newFieldDefinition()
+                .name(getPropertyName(property))
+                .description(getPropertyDescription(property, description))
+                .type(nullableType(baseType, nullable = isPropertyNullable(property)))
+                .build()
 
 // ============================================================================
 // Single object field

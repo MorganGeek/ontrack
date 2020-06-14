@@ -3,14 +3,17 @@ package net.nemerosa.ontrack.graphql.schema
 import graphql.schema.GraphQLObjectType
 import net.nemerosa.ontrack.graphql.schema.actions.UIActionsGraphQLService
 import net.nemerosa.ontrack.graphql.schema.actions.actions
+import net.nemerosa.ontrack.graphql.support.listField
 import net.nemerosa.ontrack.graphql.support.objectField
 import net.nemerosa.ontrack.model.security.SecurityService
+import net.nemerosa.ontrack.ui.menu.UIMenuActionContributor
 import org.springframework.stereotype.Component
 
 @Component
 class GQLTypeUser(
         private val securityService: SecurityService,
-        private val uiActionsGraphQLService: UIActionsGraphQLService
+        private val uiActionsGraphQLService: UIActionsGraphQLService,
+        private val uiMenuActionContributors: List<UIMenuActionContributor>
 ) : GQLType {
 
     companion object {
@@ -31,6 +34,17 @@ class GQLTypeUser(
                     )
                     // Actions
                     .actions(uiActionsGraphQLService, RootUser::class)
+                    // UI menu actions
+                    .field(
+                            listField(
+                                    description = "List of actions in the user menu",
+                                    name = "uiMenuActions"
+                            ) {
+                                uiMenuActionContributors.flatMap { contributor ->
+                                    contributor.getMenuActions()
+                                }
+                            }
+                    )
                     // OK
                     .build()
 

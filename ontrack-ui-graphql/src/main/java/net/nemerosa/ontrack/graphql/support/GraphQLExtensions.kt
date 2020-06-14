@@ -48,3 +48,8 @@ fun getPropertyName(property: KProperty<*>): String =
                 ?: property.findAnnotation<JsonProperty>()?.value
                 ?: property.getter.findAnnotation<JsonProperty>()?.value
                 ?: property.name
+
+/**
+ * Checks if a property is nullable
+ */
+fun isPropertyNullable(property: KProperty<*>) = property.returnType.isMarkedNullable
