@@ -38,6 +38,7 @@ type GetHomePageResponse = {
   projects: [GetHomePageProject];
 }
 
+// TODO Use the generated GraphQL types instead
 type GetHomePageProject = {
   id: string;
   name: string;
