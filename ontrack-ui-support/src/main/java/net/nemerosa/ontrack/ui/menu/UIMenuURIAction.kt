@@ -9,10 +9,12 @@ class UIMenuURIAction(
         description: String,
         icon: String,
         @APIDescription("URI to redirect to")
-        val uri: String
+        val uri: String,
+        order: Int = UIMenuActionOrder.MIDDLE
 ) : UIMenuAction(
         id,
         name,
         description,
-        icon
+        icon,
+        order
 )

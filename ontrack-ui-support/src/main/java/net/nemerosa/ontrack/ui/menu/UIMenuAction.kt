@@ -10,5 +10,10 @@ abstract class UIMenuAction(
         @APIDescription("will be used as a tooltip")
         val description: String,
         @APIDescription("ID of a FontAwesome icon to associate with this menu entry")
-        val icon: String
+        val icon: String,
+        /**
+         * @see UIMenuActionOrder
+         */
+        @APIDescription("Order of UI action (relative to all other actions)")
+        val order: Int = UIMenuActionOrder.MIDDLE
 )

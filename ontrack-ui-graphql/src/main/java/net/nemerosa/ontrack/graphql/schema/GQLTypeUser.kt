@@ -42,7 +42,7 @@ class GQLTypeUser(
                             ) {
                                 uiMenuActionContributors.flatMap { contributor ->
                                     contributor.getMenuActions()
-                                }
+                                }.sortedBy { it.order }
                             }
                     )
                     // OK

@@ -4,6 +4,15 @@ import java.util.*
 import kotlin.reflect.KCallable
 
 /**
+ * Given a boolean, returns a value which is computed or `null`.
+ */
+infix fun <T> Boolean.then(supplier: () -> T): T? = if (this) {
+    supplier()
+} else {
+    null
+}
+
+/**
  * Combination of predicates
  */
 infix fun <T> ((T) -> Boolean).and(other: (T) -> Boolean): (T) -> Boolean = { t ->

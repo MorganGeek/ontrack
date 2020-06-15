@@ -9,10 +9,12 @@ class UIMenuPageAction(
         description: String,
         icon: String,
         @APIDescription("Page to display")
-        val page: String
+        val page: String,
+        order: Int = UIMenuActionOrder.MIDDLE
 ) : UIMenuAction(
         id,
         name,
         description,
-        icon
+        icon,
+        order
 )
