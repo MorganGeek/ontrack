@@ -91,6 +91,9 @@ class WebConfig(
     override fun addViewControllers(registry: ViewControllerRegistry) {
         val mode = cachedSettingsService.getCachedSettings<UISettings>().mode
         logger.info("[ui] Mode = $mode")
+        if (mode.allowUINextGen) {
+            registry.addViewController("/ng/").setViewName("redirect:/ng/index.html")
+        }
         when (mode) {
             UIMode.LEGACY_ONLY -> {
                 registry.addViewController("/ng/**").setViewName("redirect:/index.html")
