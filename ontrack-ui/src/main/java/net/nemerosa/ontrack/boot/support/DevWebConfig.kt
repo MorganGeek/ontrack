@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.io.File
 
@@ -70,8 +69,4 @@ class DevWebConfig : WebMvcConfigurer {
         ).absolutePath
     }
 
-    override fun addViewControllers(registry: ViewControllerRegistry) {
-        registry.addViewController("/").setViewName("forward:/index.html")
-        registry.addViewController("/ng/").setViewName("forward:/ng/index.html")
-    }
 }

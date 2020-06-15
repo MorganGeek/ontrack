@@ -28,7 +28,7 @@ class CoreUIMenuActionContributor(
                             description = "Goes to the legacy UI (home page)",
                             icon = "door-open",
                             order = UIMenuActionOrder.BEFORE_END,
-                            uri = "/"
+                            uri = "/index.html"
                     )
                 },
                 // Logout

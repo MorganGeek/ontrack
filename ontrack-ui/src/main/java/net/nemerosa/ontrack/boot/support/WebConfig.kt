@@ -1,8 +1,13 @@
 package net.nemerosa.ontrack.boot.support
 
+import net.nemerosa.ontrack.boot.ui.settings.UIMode
+import net.nemerosa.ontrack.boot.ui.settings.UISettings
 import net.nemerosa.ontrack.model.security.SecurityService
+import net.nemerosa.ontrack.model.settings.CachedSettingsService
+import net.nemerosa.ontrack.model.settings.getCachedSettings
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import net.nemerosa.ontrack.ui.resource.ResourceModule
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.task.TaskExecutorBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
@@ -11,10 +16,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.StringHttpMessageConverter
 import org.springframework.web.filter.ShallowEtagHeaderFilter
-import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer
-import org.springframework.web.servlet.config.annotation.CorsRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.web.servlet.config.annotation.*
 import javax.annotation.PostConstruct
 import javax.servlet.DispatcherType
 
@@ -23,10 +25,11 @@ class WebConfig(
         private val uriBuilder: URIBuilder,
         private val securityService: SecurityService,
         private val resourceModules: List<ResourceModule>,
-        private val taskExecutorBuilder: TaskExecutorBuilder
+        private val taskExecutorBuilder: TaskExecutorBuilder,
+        private val cachedSettingsService: CachedSettingsService
 ) : WebMvcConfigurer {
 
-    private val logger = LoggerFactory.getLogger(WebConfig::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(WebConfig::class.java)
 
     /**
      * Logging
@@ -79,6 +82,28 @@ class WebConfig(
                 "/extension/**"
         ).forEach {
             registry.addMapping(it).allowedMethods(*ALLOWED_API_METHODS.toTypedArray())
+        }
+    }
+
+    /**
+     * Redirections at high level according to the UI mode.
+     */
+    override fun addViewControllers(registry: ViewControllerRegistry) {
+        val mode = cachedSettingsService.getCachedSettings<UISettings>().mode
+        logger.info("[ui] Mode = $mode")
+        when (mode) {
+            UIMode.LEGACY_ONLY -> {
+                registry.addViewController("/ng/**").setViewName("redirect:/index.html")
+            }
+            UIMode.LEGACY_FIRST -> {
+                registry.addViewController("/").setViewName("redirect:/index.html")
+            }
+            UIMode.NEXT_GEN_FIRST -> {
+                registry.addViewController("/").setViewName("redirect:/ng/index.html")
+            }
+            UIMode.NEXT_GEN_ONLY -> {
+                registry.addViewController("/index.html").setViewName("redirect:/ng/index.html")
+            }
         }
     }
 

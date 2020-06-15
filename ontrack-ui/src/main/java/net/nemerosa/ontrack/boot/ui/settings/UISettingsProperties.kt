@@ -10,6 +10,13 @@ class UISettingsProperties {
     /**
      * UI mode
      */
-    var mode: UIMode = UIMode.LEGACY_FIRST
+    var mode: UIMode = DEFAULT_UI_MODE
+
+    companion object {
+        /**
+         * Default hard coded mode
+         */
+        val DEFAULT_UI_MODE = UIMode.LEGACY_FIRST
+    }
 
 }
