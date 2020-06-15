@@ -1,5 +1,6 @@
 package net.nemerosa.ontrack.boot.ui;
 
+import net.nemerosa.ontrack.boot.ui.settings.UISettings;
 import net.nemerosa.ontrack.extension.api.ExtensionManager;
 import net.nemerosa.ontrack.extension.api.UserMenuExtension;
 import net.nemerosa.ontrack.model.Ack;
@@ -7,6 +8,7 @@ import net.nemerosa.ontrack.model.form.Form;
 import net.nemerosa.ontrack.model.form.Password;
 import net.nemerosa.ontrack.model.labels.LabelManagement;
 import net.nemerosa.ontrack.model.security.*;
+import net.nemerosa.ontrack.model.settings.CachedSettingsService;
 import net.nemerosa.ontrack.model.support.Action;
 import net.nemerosa.ontrack.model.support.PasswordChange;
 import net.nemerosa.ontrack.ui.controller.AbstractResourceController;
@@ -24,12 +26,14 @@ public class UserController extends AbstractResourceController {
     private final SecurityService securityService;
     private final UserService userService;
     private final ExtensionManager extensionManager;
+    private final CachedSettingsService cachedSettingsService;
 
     @Autowired
-    public UserController(SecurityService securityService, UserService userService, ExtensionManager extensionManager) {
+    public UserController(SecurityService securityService, UserService userService, ExtensionManager extensionManager, CachedSettingsService cachedSettingsService) {
         this.securityService = securityService;
         this.userService = userService;
         this.extensionManager = extensionManager;
+        this.cachedSettingsService = cachedSettingsService;
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -105,6 +109,11 @@ public class UserController extends AbstractResourceController {
         }
         // Contributions from extensions
         ConnectedAccount contributed = userMenuExtensions(user);
+        // Switching to the Next Gen UI
+        UISettings uiSettings = cachedSettingsService.getCachedSettings(UISettings.class);
+        if (uiSettings.getMode().getAllowUINextGen()) {
+            contributed.add(Action.of("next-gen-ui", "Next Gen UI", "/ng/index.html"));
+        }
         // Admin tools
         if (securityService.isGlobalFunctionGranted(ApplicationManagement.class)) {
             contributed.add(Action.of("admin-health", "System health", "admin-health"));

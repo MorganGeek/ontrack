@@ -66,7 +66,8 @@
                             </li>
                             <!-- All actions -->
                             <li ng-repeat="action in user.actions | orderBy: 'name' | filter:{name: userMenuFilter}">
-                                <a ng-if="action.type == 'LINK'" id="{{action.id}}-link" href="#{{action.uri}}">{{action.name}}</a>
+                                <a ng-if="action.type == 'LINK' && !action.uri.startsWith('/')" id="{{action.id}}-link" href="#{{action.uri}}">{{action.name}}</a>
+                                <a ng-if="action.type == 'LINK' && action.uri.startsWith('/')" id="{{action.id}}-link-absolute" href="{{action.uri}}">{{action.name}}</a>
                                 <a ng-if="action.type == 'FORM'" id="{{action.id}}-form" ng-click="showActionForm(action)">{{action.name}}</a>
                             </li>
                             <!-- Separator -->
