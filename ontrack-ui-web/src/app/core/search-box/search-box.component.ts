@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class SearchBoxComponent implements OnInit {
 
   boxId: string;
+  boxClass: string = "form-inline";
 
   constructor() { }
 

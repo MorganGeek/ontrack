@@ -1,19 +1,24 @@
-<form class="form-inline">
+<form class="{{boxClass}}">
   <div class="input-group">
     <div class="input-group-prepend">
       <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button type="button" ngbDropdownItem>Action - 1</button>
-          <button type="button" ngbDropdownItem>Another Action</button>
-          <button type="button" ngbDropdownItem>Something else is here</button>
+        <button id="ot-searchbox-{{boxId}}-type-button"
+                type="button"
+                class="btn btn-light"
+                ngbDropdownToggle>Any</button>
+        <div ngbDropdownMenu aria-labelledby="ot-searchbox-{{boxId}}-type-button">
+          <button type="button" ngbDropdownItem id="ot-searchbox-{{boxId}}-type-none">Any</button>
+          <button type="button" ngbDropdownItem>Project</button>
         </div>
       </div>
     </div>
-    <input type="text" class="form-control" placeholder="Search..."
-           aria-label="Text input with dropdown button">
+    <input type="text"
+           id="ot-searchbox-{{boxId}}-token"
+           class="form-control"
+           placeholder="Search..."
+           aria-label="Text input with dropdown for the search">
     <div class="input-group-append">
-      <button class="btn btn-light" type="button" id="button-addon2">
+      <button class="btn btn-light" type="submit" id="ot-searchbox-{{boxId}}-button" title="Launches the search">
         <i class="fas fa-search"></i>
       </button>
     </div>
