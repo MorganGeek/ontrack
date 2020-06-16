@@ -35,7 +35,16 @@ export class UserMenuComponent implements OnInit {
                 uri
               }
               ... on UIMenuPageAction {
-                page
+                page {
+                  feature {
+                    id
+                  }
+                  type
+                  params {
+                    name
+                    value
+                  }
+                }
               }
             }
           }
@@ -92,9 +101,24 @@ class UserMenuUIURIAction implements UserMenuUIAction {
 }
 
 class UserMenuUIPageAction implements UserMenuUIAction {
-  page: string;
+  page: UIPage;
   description: string;
   icon: String;
   id: string;
   name: string;
+}
+
+type ExtensionFeature = {
+  id: string;
+}
+
+type UIPage = {
+  feature?: ExtensionFeature;
+  type: string;
+  params: [UIPageParam];
+}
+
+type UIPageParam = {
+  name: string;
+  value: string;
 }
