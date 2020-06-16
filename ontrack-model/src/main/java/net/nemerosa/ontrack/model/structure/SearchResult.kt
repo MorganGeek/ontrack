@@ -1,6 +1,7 @@
 package net.nemerosa.ontrack.model.structure
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import net.nemerosa.ontrack.model.ui.UIPage
 import java.net.URI
 
 /**
@@ -22,9 +23,14 @@ constructor(
          */
         val uri: URI,
         /**
-         * Web access point
+         * Web access point (used for legacy UI)
          */
+        @Deprecated("This field will be removed in V5 and [uiPage] must be used instead.")
         val page: URI,
+        /**
+         * Web access point (used for Next Gen UI)
+         */
+        val uiPage: UIPage,
         /**
          * Score for the search
          */

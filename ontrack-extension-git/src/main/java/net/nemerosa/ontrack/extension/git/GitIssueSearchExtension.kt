@@ -10,6 +10,7 @@ import net.nemerosa.ontrack.job.Schedule
 import net.nemerosa.ontrack.json.parseOrNull
 import net.nemerosa.ontrack.model.structure.*
 import net.nemerosa.ontrack.model.support.OntrackConfigProperties
+import net.nemerosa.ontrack.model.ui.UIPage
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 @Component
 class GitIssueSearchExtension(
-        extensionFeature: GitExtensionFeature,
+        private val extensionFeature: GitExtensionFeature,
         private val gitService: GitService,
         private val uriBuilder: URIBuilder,
         private val structureService: StructureService,
@@ -99,6 +100,12 @@ class GitIssueSearchExtension(
                     description = "Issue ${item.displayKey} found in project ${project.name}",
                     uri = uriBuilder.build(on(GitController::class.java).issueProjectInfo(project.id, item.key)),
                     page = uriBuilder.page("extension/git/${project.id}/issue/${item.key}"),
+                    uiPage = UIPage.extensionPage(
+                            extensionFeature,
+                            "git-issue",
+                            UIPage.PARAM_ID to project.id.toString(),
+                            "issue" to item.key
+                    ),
                     accuracy = score,
                     type = searchResultType,
                     data = mapOf(

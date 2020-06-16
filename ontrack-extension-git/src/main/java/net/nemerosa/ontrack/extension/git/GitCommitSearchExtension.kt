@@ -13,6 +13,7 @@ import net.nemerosa.ontrack.model.security.ProjectView
 import net.nemerosa.ontrack.model.security.SecurityService
 import net.nemerosa.ontrack.model.structure.*
 import net.nemerosa.ontrack.model.support.OntrackConfigProperties
+import net.nemerosa.ontrack.model.ui.UIPage
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -23,7 +24,7 @@ import java.util.regex.Pattern
 
 @Component
 class GitCommitSearchExtension(
-        extensionFeature: GitExtensionFeature,
+        private val extensionFeature: GitExtensionFeature,
         private val gitService: GitService,
         private val uriBuilder: URIBuilder,
         private val securityService: SecurityService,
@@ -123,6 +124,7 @@ class GitCommitSearchExtension(
                             )
                     ),
                     page = uriBuilder.page("extension/git/${project.id}/commit/${item.commit}"),
+                    uiPage = UIPage.extensionPage(extensionFeature, "git-commit", UIPage.PARAM_ID to project.id.toString(), "commit" to item.commit),
                     accuracy = score,
                     type = searchResultType,
                     data = mapOf(

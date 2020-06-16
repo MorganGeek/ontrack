@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import net.nemerosa.ontrack.extension.support.AbstractExtension
 import net.nemerosa.ontrack.json.parseOrNull
 import net.nemerosa.ontrack.model.structure.*
+import net.nemerosa.ontrack.model.ui.UIPage
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import org.springframework.stereotype.Component
 
@@ -63,6 +64,7 @@ class ReleaseSearchExtension(
                     description = "${entity.entityDisplayName} having version/label/release ${item.release}",
                     uri = uriBuilder.getEntityURI(entity),
                     page = uriBuilder.getEntityPage(entity),
+                    uiPage = UIPage.projectEntityPage(entity),
                     accuracy = score,
                     type = searchResultType
             )

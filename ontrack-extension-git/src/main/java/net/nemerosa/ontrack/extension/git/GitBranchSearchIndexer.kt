@@ -5,6 +5,7 @@ import net.nemerosa.ontrack.common.asMap
 import net.nemerosa.ontrack.extension.git.model.GitBranchConfiguration
 import net.nemerosa.ontrack.extension.git.service.GitService
 import net.nemerosa.ontrack.model.structure.*
+import net.nemerosa.ontrack.model.ui.UIPage
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import org.springframework.stereotype.Component
 import java.util.function.BiConsumer
@@ -51,6 +52,7 @@ class GitBranchSearchIndexer(
                     description = "Git branch ${branchConfig.branch}",
                     uri = uriBuilder.getEntityURI(branch),
                     page = uriBuilder.getEntityPage(branch),
+                    uiPage = UIPage.projectEntityPage(branch),
                     accuracy = score,
                     type = searchResultType
             )

@@ -9,6 +9,7 @@ import net.nemerosa.ontrack.extension.scm.catalog.SCMCatalogEntry
 import net.nemerosa.ontrack.extension.scm.catalog.ui.SCMCatalogController
 import net.nemerosa.ontrack.job.Schedule
 import net.nemerosa.ontrack.model.structure.*
+import net.nemerosa.ontrack.model.ui.UIPage
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
@@ -16,7 +17,7 @@ import java.net.URI
 
 @Component
 class SCMCatalogSearchIndexer(
-        extensionFeature: SCMExtensionFeature,
+        private val extensionFeature: SCMExtensionFeature,
         private val scmCatalog: SCMCatalog,
         private val catalogLinkService: CatalogLinkService,
         private val uriBuilder: URIBuilder
@@ -52,16 +53,19 @@ class SCMCatalogSearchIndexer(
             val description: String
             val uri: URI
             val page: URI
+            val uiPage: UIPage
             if (project != null) {
                 title = "${project.name} (${entry.repository})"
                 description = "Project ${project.name} associated with SCM ${entry.repository} (${entry.scm} @ ${entry.config})"
                 uri = uriBuilder.getEntityURI(project)
                 page = uriBuilder.getEntityPage(project)
+                uiPage = UIPage.projectEntityPage(project)
             } else {
                 title = entry.repository
                 description = "SCM ${entry.repository} (${entry.scm} @ ${entry.config}) not associated with any project"
                 uri = uriBuilder.build(MvcUriComponentsBuilder.on(SCMCatalogController::class.java).entries())
                 page = uriBuilder.page("extension/scm/scm-catalog")
+                uiPage = UIPage.extensionPage(extensionFeature, "scm-catalog")
             }
             // Result
             SearchResult(
@@ -69,6 +73,7 @@ class SCMCatalogSearchIndexer(
                     description = description,
                     uri = uri,
                     page = page,
+                    uiPage = uiPage,
                     accuracy = score,
                     type = searchResultType
             )

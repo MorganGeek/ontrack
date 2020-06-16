@@ -5,6 +5,7 @@ import net.nemerosa.ontrack.model.events.Event
 import net.nemerosa.ontrack.model.events.EventFactory
 import net.nemerosa.ontrack.model.events.EventListener
 import net.nemerosa.ontrack.model.structure.*
+import net.nemerosa.ontrack.model.ui.UIPage
 import net.nemerosa.ontrack.ui.controller.URIBuilder
 import org.springframework.stereotype.Component
 
@@ -47,6 +48,7 @@ class BranchSearchProvider(
                         description = description ?: "",
                         uri = uriBuilder.getEntityURI(this),
                         page = uriBuilder.getEntityPage(this),
+                        uiPage = UIPage.projectEntityPage(this),
                         accuracy = score,
                         type = searchResultType
                 )
