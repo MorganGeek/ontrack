@@ -1,6 +1,7 @@
 package net.nemerosa.ontrack.ui.menu
 
 import net.nemerosa.ontrack.model.annotations.APIDescription
+import net.nemerosa.ontrack.model.ui.UIPage
 
 @APIDescription("Action to move the user to another page")
 class UIMenuPageAction(
@@ -9,7 +10,7 @@ class UIMenuPageAction(
         description: String,
         icon: String,
         @APIDescription("Page to display")
-        val page: String,
+        val page: UIPage,
         order: Int = UIMenuActionOrder.MIDDLE
 ) : UIMenuAction(
         id,

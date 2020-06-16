@@ -2,7 +2,6 @@ package net.nemerosa.ontrack.graphql.support
 
 import graphql.Scalars.GraphQLString
 import graphql.schema.*
-import net.nemerosa.ontrack.graphql.support.GraphqlUtils.stdList
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 
@@ -42,6 +41,16 @@ inline fun <reified T : Any> objectField(
         nullable: Boolean = true,
         noinline fetcher: ((DataFetchingEnvironment) -> T?)? = null
 ) = objectField(T::class, name, description, nullable, fetcher)
+
+inline fun <reified T : Any> objectField(
+        property: KProperty1<*, T?>,
+        description: String? = null
+) = objectField(
+        type = T::class,
+        name = getPropertyName(property),
+        description = getPropertyDescription(property, description),
+        nullable = isPropertyNullable(property)
+) { env -> property.get(env.getSource()) }
 
 fun <T : Any> objectField(
         type: KClass<T>,
@@ -115,6 +124,17 @@ fun <T> listField(
         .type(listType(type, nullable))
         .dataFetcher(fetcher)
         .build()
+
+// ============================================================================
+// List of strings
+// ============================================================================
+
+fun stringListField(property:KProperty1<*,List<String>>, description: String? = null): GraphQLFieldDefinition =
+        GraphQLFieldDefinition.newFieldDefinition()
+                .name(getPropertyName(property))
+                .description(getPropertyDescription(property, description))
+                .type(listType(GraphQLString))
+                .build()
 
 // ============================================================================
 // General utilities

@@ -4,6 +4,7 @@ import graphql.schema.GraphQLObjectType
 import net.nemerosa.ontrack.graphql.schema.GQLType
 import net.nemerosa.ontrack.graphql.schema.GQLTypeCache
 import net.nemerosa.ontrack.graphql.support.getTypeDescription
+import net.nemerosa.ontrack.graphql.support.objectField
 import net.nemerosa.ontrack.graphql.support.stringField
 import net.nemerosa.ontrack.ui.menu.UIMenuAction
 import net.nemerosa.ontrack.ui.menu.UIMenuPageAction
@@ -27,7 +28,7 @@ class GQLTypeUIMenuPageAction(
                     .field(stringField(UIMenuAction::description))
                     .field(stringField(UIMenuAction::icon))
                     // Page
-                    .field(stringField(UIMenuPageAction::page))
+                    .field(objectField(UIMenuPageAction::page))
                     // OK
                     .build()
 
