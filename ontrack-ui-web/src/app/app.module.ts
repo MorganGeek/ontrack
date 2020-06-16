@@ -10,13 +10,15 @@ import {ToolbarComponent} from "./core/toolbar/toolbar.component";
 
 import {UserMenuComponent} from "./core/user-menu/user-menu.component";
 import {HomePageComponent} from "./page/home-page/home-page.component";
+import {ProjectPageComponent} from "./page/project-page/project-page.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     UserMenuComponent,
-    HomePageComponent
+    HomePageComponent,
+    ProjectPageComponent
   ],
   imports: [
     BrowserModule,
