@@ -47,6 +47,7 @@ class DevWebConfig : WebMvcConfigurer {
                     }
                 })
         registry.addResourceHandler("/ng/*.js").addResourceLocations("file:$ngPath/")
+        registry.addResourceHandler("/ng/*.js.map").addResourceLocations("file:$ngPath/")
         registry.addResourceHandler("/ng/assets/*.png").addResourceLocations("file:$ngPath/assets/")
 
 
