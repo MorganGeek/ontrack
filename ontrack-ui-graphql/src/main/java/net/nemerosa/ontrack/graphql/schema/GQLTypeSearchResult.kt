@@ -3,6 +3,7 @@ package net.nemerosa.ontrack.graphql.schema
 import graphql.Scalars.GraphQLFloat
 import graphql.Scalars.GraphQLString
 import graphql.schema.GraphQLObjectType
+import net.nemerosa.ontrack.graphql.support.objectField
 import net.nemerosa.ontrack.model.structure.SearchResult
 import org.springframework.stereotype.Component
 
@@ -38,6 +39,7 @@ class GQLTypeSearchResult(
                             .description("Web access point")
                             .type(GraphQLString)
                 }
+                .field(objectField(SearchResult::uiPage))
                 .field {
                     it.name("accuracy")
                             .description("Score for the search")

@@ -1,6 +1,7 @@
 package net.nemerosa.ontrack.model.structure
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import net.nemerosa.ontrack.model.annotations.APIDescription
 import net.nemerosa.ontrack.model.ui.UIPage
 import java.net.URI
 
@@ -30,6 +31,7 @@ constructor(
         /**
          * Web access point (used for Next Gen UI)
          */
+        @APIDescription("Web access point (used for Next Gen UI)")
         val uiPage: UIPage,
         /**
          * Score for the search
