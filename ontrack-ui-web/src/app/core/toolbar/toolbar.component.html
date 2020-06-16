@@ -15,15 +15,13 @@
         <form class="form-inline">
           <div class="input-group">
             <div class="input-group-prepend">
-              <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                      aria-expanded="false">Any
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div role="separator" class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+              <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button type="button" ngbDropdownItem>Action - 1</button>
+                  <button type="button" ngbDropdownItem>Another Action</button>
+                  <button type="button" ngbDropdownItem>Something else is here</button>
+                </div>
               </div>
             </div>
             <input type="text" class="form-control" placeholder="Search..."
