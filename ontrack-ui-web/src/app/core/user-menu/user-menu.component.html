@@ -2,7 +2,7 @@
 <span *ngIf="loading">
   Loading...
 </span>
-<span class="ot-action" *ngIf="userName" title="Current user being logged in.">
+<span class="ot-action" *ngIf="userName" title="Current user being logged in." on-click="toggleMenu()">
   <i class="fas fa-user"></i>
   {{userName}}
 </span>
