@@ -7,6 +7,15 @@ variable "ontrack_version" {
 
 provider "null" {}
 
+data "null_data_source" "db-info" {
+  inputs = {
+    db_host = digitalocean_database_cluster.db.private_host
+    db_name = digitalocean_database_db.db-ontrack.name
+    db_user = digitalocean_database_user.db-user.name
+    db_password = digitalocean_database_user.db-user.password
+  }
+}
+
 resource "null_resource" "ontrack-provisioning" {
 
   triggers = {
@@ -15,7 +24,7 @@ resource "null_resource" "ontrack-provisioning" {
     // Has the Ontrack version changed?
     ontrack-version = var.ontrack_version
     // Identifies the content of this resource
-    version = "0.1.0"
+    version = "0.2.1"
   }
 
   connection {
@@ -32,6 +41,18 @@ resource "null_resource" "ontrack-provisioning" {
   provisioner "file" {
     source = "compose/docker-compose.yml"
     destination = "/var/ontrack/docker-compose.yml"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      <<-EOT
+      ONTRACK_VERSION=${var.ontrack_version} \
+      JDBC_URL=jdbc:postgresql://${digitalocean_database_cluster.db.private_host}:${digitalocean_database_cluster.db.port}/${digitalocean_database_db.db-ontrack.name} \
+      JDBC_USERNAME=${digitalocean_database_user.db-user.name} \
+      JDBC_PASSWORD=${digitalocean_database_user.db-user.password} \
+      docker-compose --file /var/ontrack/docker-compose.yml --project-name ontrack up -d
+      EOT
+    ]
   }
 
 }

@@ -9,7 +9,9 @@ services:
     environment:
       PROFILE: prod
       JAVA_OPTIONS: "-Xms1024m -Xmx1024m"
-      # TODO SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres/ontrack"
+      SPRING_DATASOURCE_URL: "${JDBC_URL}"
+      SPRING_DATASOURCE_USERNAME: "${JDBC_USERNAME}"
+      SPRING_DATASOURCE_PASSWORD: "${JDBC_PASSWORD}"
       SPRING_ELASTICSEARCH_REST_URIS: "http://elasticsearch:9200"
     depends_on:
       elasticsearch:
