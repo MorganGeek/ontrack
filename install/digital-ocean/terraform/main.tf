@@ -71,6 +71,9 @@ resource "digitalocean_loadbalancer" "ontrack-public" {
   name   = "${var.do_region}-${var.do_project}-lb-ontrack"
   region = var.do_region
 
+  redirect_http_to_https = true
+  vpc_uuid = digitalocean_vpc.vpc.id
+
   forwarding_rule {
     entry_port     = 443
     entry_protocol = "https"
