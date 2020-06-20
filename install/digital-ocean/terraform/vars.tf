@@ -42,3 +42,8 @@ variable "do_domain" {
   type = string
   description = "Domain managed by Digital Ocean where to apply the load balancer certificate. Certificate will be managed by Let's Encrypt automatically."
 }
+
+variable "do_domain_record" {
+  type = string
+  description = "Domain record (used by the load balancer)"
+}

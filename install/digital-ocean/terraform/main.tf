@@ -104,7 +104,14 @@ resource "digitalocean_loadbalancer" "ontrack-public" {
   ]
 }
 
-// TODO DNS record to the load balancer
+// DNS record to the load balancer
+
+resource "digitalocean_record" "record" {
+  domain = var.do_domain
+  type   = "A"
+  name   = var.do_domain_record
+  value  = digitalocean_loadbalancer.ontrack-public.ip
+}
 
 // Assigns all resources to the project
 

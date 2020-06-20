@@ -67,6 +67,8 @@ do_project = "<do-project>"
 do_region = "<do-region>"
 // (required) The Digital Ocean domain
 do_domain = "<do-domain>"
+// (required) The record to create in the domain
+do_domain_record = "<do-project>" 
 // (optional) Database cluster size
 // do_database_size = "db-s-1vcpu-1gb"
 // (optional) Number of nodes in the Digital Ocean Postgres cluster
