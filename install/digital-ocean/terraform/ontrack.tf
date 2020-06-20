@@ -9,10 +9,7 @@ provider "null" {}
 
 data "null_data_source" "db-info" {
   inputs = {
-    db_host = digitalocean_database_cluster.db.private_host
-    db_name = digitalocean_database_db.db-ontrack.name
-    db_user = digitalocean_database_user.db-user.name
-    db_password = digitalocean_database_user.db-user.password
+    db_url = "jdbc:postgresql://${digitalocean_database_cluster.db.private_host}:${digitalocean_database_cluster.db.port}/${digitalocean_database_db.db-ontrack.name}?sslmode=require"
   }
 }
 
@@ -24,7 +21,7 @@ resource "null_resource" "ontrack-provisioning" {
     // Has the Ontrack version changed?
     ontrack-version = var.ontrack_version
     // Identifies the content of this resource
-    version = "0.2.1"
+    version = "0.2.3"
   }
 
   connection {
@@ -47,7 +44,7 @@ resource "null_resource" "ontrack-provisioning" {
     inline = [
       <<-EOT
       ONTRACK_VERSION=${var.ontrack_version} \
-      JDBC_URL=jdbc:postgresql://${digitalocean_database_cluster.db.private_host}:${digitalocean_database_cluster.db.port}/${digitalocean_database_db.db-ontrack.name} \
+      JDBC_URL=${data.null_data_source.db-info.outputs["db_url"]} \
       JDBC_USERNAME=${digitalocean_database_user.db-user.name} \
       JDBC_PASSWORD=${digitalocean_database_user.db-user.password} \
       docker-compose --file /var/ontrack/docker-compose.yml --project-name ontrack up -d
@@ -55,4 +52,8 @@ resource "null_resource" "ontrack-provisioning" {
     ]
   }
 
+}
+
+output "ontrack_jdbc_url" {
+  value = data.null_data_source.db-info.outputs["db_url"]
 }
