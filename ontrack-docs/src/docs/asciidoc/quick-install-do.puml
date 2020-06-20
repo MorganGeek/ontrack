@@ -1,0 +1,35 @@
+@startuml
+
+actor "user-ontrack" as User
+
+package "project-ontrack" {
+
+   cloud "vpc-ontrack" {
+
+      node "droplet-ontrack" as OntrackNode {
+         component "ontrack" as OntrackContainer
+         component "elasticsearch" as ESContainer
+      }
+
+      database "db-ontrack" as OntrackDatabase
+
+      boundary "lb-ontrack" as LB
+      file "cert-ontrack" as LBCert
+
+   }
+
+   interface "dns-ontrack" as DNSRecord
+
+}
+
+OntrackContainer .down.> ESContainer
+OntrackContainer .right.> OntrackDatabase
+
+LB .down.> OntrackNode: 8080
+LB .right.> LBCert
+
+DNSRecord .right.> LB
+
+User .down.> DNSRecord
+
+@enduml

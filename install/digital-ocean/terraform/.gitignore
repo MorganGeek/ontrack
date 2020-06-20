@@ -1,0 +1,3 @@
+*.hcl
+*.tfvars
+/.terraform
