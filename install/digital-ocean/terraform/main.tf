@@ -28,9 +28,19 @@ resource "digitalocean_database_cluster" "db" {
   private_network_uuid = digitalocean_vpc.vpc.id
 }
 
-// TODO New Ontrack user for the database
+// New Ontrack user for the database
 
-// TODO New Ontrack database
+resource "digitalocean_database_user" "db-user" {
+  cluster_id = digitalocean_database_cluster.db.id
+  name = "ontrack"
+}
+
+// New Ontrack database
+
+resource "digitalocean_database_db" "db-ontrack" {
+  cluster_id = digitalocean_database_cluster.db.id
+  name = "ontrack"
+}
 
 // TODO Trusted to the database
 
