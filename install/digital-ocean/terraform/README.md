@@ -142,8 +142,3 @@ terraform destroy --var-file=install.tfvars
 ``` 
 
 ⚠️ This will destroy the Ontrack database and all its data.
-
-## Remaining actions
-
-* [ ] Provisioning through Docker Compose
-* [ ] Vault container

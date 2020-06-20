@@ -13,6 +13,8 @@ services:
       SPRING_DATASOURCE_USERNAME: "${JDBC_USERNAME}"
       SPRING_DATASOURCE_PASSWORD: "${JDBC_PASSWORD}"
       SPRING_ELASTICSEARCH_REST_URIS: "http://elasticsearch:9200"
+      # Using the database for storing the encryption keys
+      ONTRACK_CONFIG_KEY_STORE: "jdbc"
     depends_on:
       elasticsearch:
         condition: service_started
