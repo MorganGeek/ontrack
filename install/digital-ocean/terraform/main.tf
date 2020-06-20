@@ -74,8 +74,6 @@ resource "digitalocean_droplet" "instance" {
   ssh_keys = [
     digitalocean_ssh_key.instance-ssh-key.id
   ]
-
-
 }
 
 // =======================================================================================
