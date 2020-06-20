@@ -120,3 +120,18 @@ To connect to the instance of Ontrack:
 
 This opens a SSH connection to the Ontrack instance using
 the [SSH key](#ssh-key) generated at the beginning.
+
+## Destroying the whole setup
+
+To remove all components which have been created before:
+
+```
+terraform destroy --var-file=install.tfvars
+``` 
+
+⚠️ This will destroy the Ontrack database and all its data.
+
+## Remaining actions
+
+* [ ] Provisioning through Docker Compose
+* [ ] Vault container
