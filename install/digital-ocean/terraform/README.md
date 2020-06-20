@@ -57,12 +57,16 @@ Variables:
 
 `install.tfvars`:
 ```
-// Your Digital Ocean token
+// (required) Your Digital Ocean token
 do_token = "<do-token>"
-// Your Digital Ocean project
+// (required) Your Digital Ocean project
 do_project = "<do-project>"
-# Your Digital Ocean region
+// (required) Your Digital Ocean region
 do_region = "<do-region>"
+// (optional) Database cluster size
+// do_database_size = "db-s-1vcpu-1gb"
+// (optional) Number of nodes in the Digital Ocean Postgres cluster
+// do_database_count = 1
 ```
 
 ## Planning & applying
