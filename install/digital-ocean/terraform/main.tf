@@ -44,6 +44,11 @@ resource "digitalocean_database_db" "db-ontrack" {
 
 // TODO SSH key for accessing the droplet
 
+resource "digitalocean_ssh_key" "instance-ssh-key" {
+  name = "${var.do_region}${var.do_project}-ssh-key"
+  public_key = file(var.do_ssh_key_public)
+}
+
 // Ontrack droplet
 
 resource "digitalocean_droplet" "instance" {
@@ -51,6 +56,9 @@ resource "digitalocean_droplet" "instance" {
   name = "${var.do_region}-${var.do_project}-ontrack"
   region = var.do_region
   size = var.do_instance_size
+  ssh_keys = [
+    digitalocean_ssh_key.instance-ssh-key.id
+  ]
 }
 
 // TODO Trusted source to the database
@@ -58,8 +66,8 @@ resource "digitalocean_droplet" "instance" {
 // Certificate for the load balancer
 
 resource "digitalocean_certificate" "ontrack-lb-cert" {
-  name    = "${var.do_project}-ontrack-lb-cert"
-  type    = "lets_encrypt"
+  name = "${var.do_project}-ontrack-lb-cert"
+  type = "lets_encrypt"
   domains = [
     var.do_domain
   ]
@@ -68,17 +76,17 @@ resource "digitalocean_certificate" "ontrack-lb-cert" {
 // Load balancer
 
 resource "digitalocean_loadbalancer" "ontrack-public" {
-  name   = "${var.do_region}-${var.do_project}-lb-ontrack"
+  name = "${var.do_region}-${var.do_project}-lb-ontrack"
   region = var.do_region
 
   redirect_http_to_https = true
   vpc_uuid = digitalocean_vpc.vpc.id
 
   forwarding_rule {
-    entry_port     = 443
+    entry_port = 443
     entry_protocol = "https"
 
-    target_port     = 8080
+    target_port = 8080
     target_protocol = "http"
 
     certificate_id = digitalocean_certificate.ontrack-lb-cert.id
@@ -94,7 +102,7 @@ resource "digitalocean_loadbalancer" "ontrack-public" {
 
   healthcheck {
     // Using the health endpoint
-    port     = 8800
+    port = 8800
     protocol = "http"
     path = "/manage/health"
   }
@@ -108,9 +116,9 @@ resource "digitalocean_loadbalancer" "ontrack-public" {
 
 resource "digitalocean_record" "record" {
   domain = var.do_domain
-  type   = "A"
-  name   = var.do_domain_record
-  value  = digitalocean_loadbalancer.ontrack-public.ip
+  type = "A"
+  name = var.do_domain_record
+  value = digitalocean_loadbalancer.ontrack-public.ip
 }
 
 // Assigns all resources to the project

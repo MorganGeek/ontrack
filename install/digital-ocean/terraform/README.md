@@ -1,6 +1,23 @@
 Digital Ocean Ontrack Quick installation
 ========================================
 
+## Local prerequites
+
+Terraform 0.12 or higher must be available.
+
+### SSH key
+
+Generate a SSH key pair:
+
+```
+ssh-keygen -t rsa -f ./do-key -N ""
+```
+
+The key pair will be generated with `do-key` and `do-key.pub` names in the current directory
+and will be used to connect to the Ontrack instance for its provisioning.
+
+You can also use it to connect to your instance later on.
+
 ## Digital Ocean prerequisites
 
 | Resource | Variable | Usage |

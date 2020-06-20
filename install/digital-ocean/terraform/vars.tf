@@ -3,6 +3,16 @@ variable "do_token" {
   description = "Digital Ocean connection token"
 }
 
+variable "do_ssh_key_public" {
+  description = "Path to the SSH public key"
+  default = "./do-key.pub"
+}
+
+variable "do_ssh_key_private" {
+  description = "Path to the SSH private key"
+  default = "./do-key"
+}
+
 variable "do_project" {
   type = string
   description = "Digital Ocean project"
