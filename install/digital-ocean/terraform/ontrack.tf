@@ -54,6 +54,6 @@ resource "null_resource" "ontrack-provisioning" {
 
 }
 
-output "ontrack_jdbc_url" {
-  value = data.null_data_source.db-info.outputs["db_url"]
+output "ontrack_url" {
+  value = "https://${var.do_domain_record}.${var.do_domain}"
 }
