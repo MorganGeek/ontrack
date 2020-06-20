@@ -42,7 +42,7 @@ resource "digitalocean_database_db" "db-ontrack" {
   name = "ontrack"
 }
 
-// TODO SSH key for accessing the droplet
+// SSH key for accessing the droplet
 
 resource "digitalocean_ssh_key" "instance-ssh-key" {
   name = "${var.do_region}${var.do_project}-ssh-key"
@@ -56,6 +56,7 @@ resource "digitalocean_droplet" "instance" {
   name = "${var.do_region}-${var.do_project}-ontrack"
   region = var.do_region
   size = var.do_instance_size
+  vpc_uuid = digitalocean_vpc.vpc.id
   ssh_keys = [
     digitalocean_ssh_key.instance-ssh-key.id
   ]
