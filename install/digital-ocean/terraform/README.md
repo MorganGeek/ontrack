@@ -36,7 +36,7 @@ key = "<do-project>/production/terraform.tfstate"
 For example:
 
 ```
-# Key: ams3-demo-ontrack-space-key
+// Key: ams3-demo-ontrack-space-key
 access_key = "<redacted>"
 secret_key = "<redacted>"
 endpoint = "https://ams3.digitaloceanspaces.com"
@@ -57,8 +57,10 @@ Variables:
 
 `install.tfvars`:
 ```
-# Your Digital Ocean token
-do_token = "<DO token>"
+// Your Digital Ocean token
+do_token = "<do-token>"
+// Your Digital Ocean project
+do_project = "<do-project>"
 ```
 
 ## Planning & applying
