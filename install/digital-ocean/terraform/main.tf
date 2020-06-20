@@ -2,13 +2,17 @@ provider "digitalocean" {
   token = var.do_token
 }
 
+// =======================================================================================
 // The project to create resources in
+// =======================================================================================
 
 data "digitalocean_project" "project" {
   name = var.do_project
 }
 
+// =======================================================================================
 // The overall VPC
+// =======================================================================================
 
 resource "digitalocean_vpc" "vpc" {
   name = "${var.do_region}-${var.do_project}-vpc"
@@ -16,7 +20,9 @@ resource "digitalocean_vpc" "vpc" {
   description = "VPC for ${var.do_project} Ontrack installation"
 }
 
+// =======================================================================================
 // Database
+// =======================================================================================
 
 resource "digitalocean_database_cluster" "db" {
   name = "${var.do_region}-${var.do_project}-database"
@@ -28,28 +34,36 @@ resource "digitalocean_database_cluster" "db" {
   private_network_uuid = digitalocean_vpc.vpc.id
 }
 
+// =======================================================================================
 // New Ontrack user for the database
+// =======================================================================================
 
 resource "digitalocean_database_user" "db-user" {
   cluster_id = digitalocean_database_cluster.db.id
   name = "ontrack"
 }
 
+// =======================================================================================
 // New Ontrack database
+// =======================================================================================
 
 resource "digitalocean_database_db" "db-ontrack" {
   cluster_id = digitalocean_database_cluster.db.id
   name = "ontrack"
 }
 
+// =======================================================================================
 // SSH key for accessing the droplet
+// =======================================================================================
 
 resource "digitalocean_ssh_key" "instance-ssh-key" {
   name = "${var.do_region}${var.do_project}-ssh-key"
   public_key = file(var.do_ssh_key_public)
 }
 
+// =======================================================================================
 // Ontrack droplet
+// =======================================================================================
 
 resource "digitalocean_droplet" "instance" {
   image = var.do_instance_image
@@ -60,11 +74,17 @@ resource "digitalocean_droplet" "instance" {
   ssh_keys = [
     digitalocean_ssh_key.instance-ssh-key.id
   ]
+
+
 }
 
+// =======================================================================================
 // TODO Trusted source to the database
+// =======================================================================================
 
+// =======================================================================================
 // Certificate for the load balancer
+// =======================================================================================
 
 resource "digitalocean_certificate" "ontrack-lb-cert" {
   name = "${var.do_project}-ontrack-lb-cert"
@@ -74,7 +94,9 @@ resource "digitalocean_certificate" "ontrack-lb-cert" {
   ]
 }
 
+// =======================================================================================
 // Load balancer
+// =======================================================================================
 
 resource "digitalocean_loadbalancer" "ontrack-public" {
   name = "${var.do_region}-${var.do_project}-lb-ontrack"
@@ -113,7 +135,9 @@ resource "digitalocean_loadbalancer" "ontrack-public" {
   ]
 }
 
+// =======================================================================================
 // DNS record to the load balancer
+// =======================================================================================
 
 resource "digitalocean_record" "record" {
   domain = var.do_domain
@@ -122,7 +146,9 @@ resource "digitalocean_record" "record" {
   value = digitalocean_loadbalancer.ontrack-public.ip
 }
 
+// =======================================================================================
 // Assigns all resources to the project
+// =======================================================================================
 
 resource "digitalocean_project_resources" "project-associations" {
   project = data.digitalocean_project.project.id
