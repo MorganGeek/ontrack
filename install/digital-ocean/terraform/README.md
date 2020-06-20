@@ -113,13 +113,13 @@ do_domain_record = "<do-project>"
 Plan:
 
 ```
-terraform plan --var-file=install.tfvars
+terraform plan --var-file=install.tfvars --out=ontrack.plan
 ```
 
 Applying:
 
 ```
-terraform apply --var-file=install.tfvars
+terraform apply ontrack.plan
 ```
 
 ## Connection
