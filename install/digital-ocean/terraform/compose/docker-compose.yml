@@ -15,6 +15,9 @@ services:
       SPRING_ELASTICSEARCH_REST_URIS: "http://elasticsearch:9200"
       # Using the database for storing the encryption keys
       ONTRACK_CONFIG_KEY_STORE: "jdbc"
+      # Load balancer settings
+      SERVER_TOMCAT_REMOTEIP_REMOTE_IP_HEADER: "X-Forwarded-For"
+      SERVER_TOMCAT_REMOTEIP_PROTOCOL_HEADER: "X-Forwarded-Proto"
     depends_on:
       elasticsearch:
         condition: service_started
