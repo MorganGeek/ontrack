@@ -42,13 +42,23 @@ resource "digitalocean_database_db" "db-ontrack" {
   name = "ontrack"
 }
 
-// TODO Trusted to the database
+// Ontrack droplet
+
+resource "digitalocean_droplet" "instance" {
+  image = var.do_instance_image
+  name = "${var.do_region}-${var.do_project}-ontrack"
+  region = var.do_region
+  size = var.do_instance_size
+}
+
+// TODO Trusted source to the database
 
 // Assigns all resources to the project
 
 resource "digitalocean_project_resources" "project-associations" {
   project = data.digitalocean_project.project.id
   resources = [
-    digitalocean_database_cluster.db.urn
+    digitalocean_database_cluster.db.urn,
+    digitalocean_droplet.instance.urn
   ]
 }

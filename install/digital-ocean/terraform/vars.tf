@@ -24,3 +24,16 @@ variable "do_database_count" {
   default = 1
   description = "Number of nodes in the Digital Ocean Postgres cluster"
 }
+
+variable "do_instance_image" {
+  type = string
+  default = "docker-18-04"
+  description = "Slug of the image to use for the Ontrack droplet"
+}
+
+
+variable "do_instance_size" {
+  type = string
+  default = "s-2vcpu-4gb"
+  description = "Size of the droplet to use for the Ontrack"
+}

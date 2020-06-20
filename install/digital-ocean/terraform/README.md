@@ -67,6 +67,10 @@ do_region = "<do-region>"
 // do_database_size = "db-s-1vcpu-1gb"
 // (optional) Number of nodes in the Digital Ocean Postgres cluster
 // do_database_count = 1
+// (optional) Slug of the image to use for the Ontrack droplet
+// do_instance_image = "docker-18-04"
+// (optional) Size of the droplet to use for the Ontrack
+// do_instance_size = "s-2vcpu-4gb"
 ```
 
 ## Planning & applying
