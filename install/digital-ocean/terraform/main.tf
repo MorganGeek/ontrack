@@ -88,7 +88,7 @@ resource "digitalocean_certificate" "ontrack-lb-cert" {
   name = "${var.do_project}-ontrack-lb-cert"
   type = "lets_encrypt"
   domains = [
-    var.do_domain
+    "${var.do_domain_record}.${var.do_domain}"
   ]
 }
 
