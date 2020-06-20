@@ -37,3 +37,8 @@ variable "do_instance_size" {
   default = "s-2vcpu-4gb"
   description = "Size of the droplet to use for the Ontrack"
 }
+
+variable "do_domain" {
+  type = string
+  description = "Domain managed by Digital Ocean where to apply the load balancer certificate. Certificate will be managed by Let's Encrypt automatically."
+}

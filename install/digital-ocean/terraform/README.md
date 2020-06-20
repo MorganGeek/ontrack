@@ -9,7 +9,8 @@ Digital Ocean Ontrack Quick installation
 | Region | `do-region` | The Digital Ocean region where to create your project |
 | Project | `do-project` | A Digital Ocean project where all the resources will be created |
 | Space | `do-space` | A Digital Ocean space where Terraform state will be created |
-| Space access key | `do-space-key-access` & `do-space-key-secret` | Digital Ocean Space access key | 
+| Space access key | `do-space-key-access` & `do-space-key-secret` | Digital Ocean Space access key |
+| Domain | `do-domain>` | Domain managed by Digital Ocean | 
 
 Example:
 
@@ -18,6 +19,7 @@ Example:
 * Project: `demo-ontrack`
 * Space: `"ams3-demo-ontrack-space"`
 * Space access key: all yours to generate
+* Domain: `yourdomain.com`
 
 ## Backend configuration
 
@@ -63,6 +65,8 @@ do_token = "<do-token>"
 do_project = "<do-project>"
 // (required) Your Digital Ocean region
 do_region = "<do-region>"
+// (required) The Digital Ocean domain
+do_domain = "<do-domain>"
 // (optional) Database cluster size
 // do_database_size = "db-s-1vcpu-1gb"
 // (optional) Number of nodes in the Digital Ocean Postgres cluster

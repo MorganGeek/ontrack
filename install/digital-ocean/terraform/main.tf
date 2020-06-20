@@ -42,6 +42,8 @@ resource "digitalocean_database_db" "db-ontrack" {
   name = "ontrack"
 }
 
+// TODO SSH key for accessing the droplet
+
 // Ontrack droplet
 
 resource "digitalocean_droplet" "instance" {
@@ -53,12 +55,61 @@ resource "digitalocean_droplet" "instance" {
 
 // TODO Trusted source to the database
 
+// Certificate for the load balancer
+
+resource "digitalocean_certificate" "ontrack-lb-cert" {
+  name    = "${var.do_project}-ontrack-lb-cert"
+  type    = "lets_encrypt"
+  domains = [
+    var.do_domain
+  ]
+}
+
+// Load balancer
+
+resource "digitalocean_loadbalancer" "ontrack-public" {
+  name   = "${var.do_region}-${var.do_project}-lb-ontrack"
+  region = var.do_region
+
+  forwarding_rule {
+    entry_port     = 443
+    entry_protocol = "https"
+
+    target_port     = 8080
+    target_protocol = "http"
+
+    certificate_id = digitalocean_certificate.ontrack-lb-cert.id
+  }
+
+  forwarding_rule {
+    entry_port = 22
+    entry_protocol = "tcp"
+
+    target_port = 22
+    target_protocol = "tcp"
+  }
+
+  healthcheck {
+    // Using the health endpoint
+    port     = 8800
+    protocol = "http"
+    path = "/manage/health"
+  }
+
+  droplet_ids = [
+    digitalocean_droplet.instance.id
+  ]
+}
+
+// TODO DNS record to the load balancer
+
 // Assigns all resources to the project
 
 resource "digitalocean_project_resources" "project-associations" {
   project = data.digitalocean_project.project.id
   resources = [
     digitalocean_database_cluster.db.urn,
-    digitalocean_droplet.instance.urn
+    digitalocean_droplet.instance.urn,
+    digitalocean_loadbalancer.ontrack-public.urn
   ]
 }
