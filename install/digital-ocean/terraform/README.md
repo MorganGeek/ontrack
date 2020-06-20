@@ -1,7 +1,19 @@
 Digital Ocean Ontrack Quick installation
 ========================================
 
-## Local prerequites
+## Content
+
+* [Local prerequisites](#local-prerequisites)
+  * [SSH key](#ssh-key)
+* [Digital Ocean prerequisites](#digital-ocean-prerequisites)
+* [Backend configuration](#backend-configuration)
+* [Configuration](#configuration)
+* [Planning & applying](#planning--applying)
+* [Connection](#connection)
+* [Destroying](#destroying)
+* [Remaining actions](#remaining-actions)
+
+## Local prerequisites
 
 Terraform 0.12 or higher must be available.
 
@@ -121,7 +133,7 @@ To connect to the instance of Ontrack:
 This opens a SSH connection to the Ontrack instance using
 the [SSH key](#ssh-key) generated at the beginning.
 
-## Destroying the whole setup
+## Destroying
 
 To remove all components which have been created before:
 
