@@ -61,6 +61,8 @@ Variables:
 do_token = "<do-token>"
 // Your Digital Ocean project
 do_project = "<do-project>"
+# Your Digital Ocean region
+do_region = "<do-region>"
 ```
 
 ## Planning & applying
