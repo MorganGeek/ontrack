@@ -10,7 +10,12 @@ provider "null" {}
 resource "null_resource" "ontrack-provisioning" {
 
   triggers = {
-    version = "0.0.3"
+    // Has the source file changed?
+    compose-file = filesha256("compose/docker-compose.yml")
+    // Has the Ontrack version changed?
+    ontrack-version = var.ontrack_version
+    // Identifies the content of this resource
+    version = "0.1.0"
   }
 
   connection {
