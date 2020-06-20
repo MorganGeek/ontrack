@@ -109,3 +109,14 @@ Applying:
 ```
 terraform apply --var-file=install.tfvars
 ```
+
+## Connection
+
+To connect to the instance of Ontrack:
+
+```
+./connect.sh
+```
+
+This opens a SSH connection to the Ontrack instance using
+the [SSH key](#ssh-key) generated at the beginning.
