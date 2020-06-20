@@ -104,6 +104,14 @@ resource "digitalocean_loadbalancer" "ontrack-public" {
   vpc_uuid = digitalocean_vpc.vpc.id
 
   forwarding_rule {
+    entry_port = 80
+    entry_protocol = "http"
+
+    target_port = 8080
+    target_protocol = "http"
+  }
+
+  forwarding_rule {
     entry_port = 443
     entry_protocol = "https"
 
