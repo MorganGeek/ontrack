@@ -2,6 +2,7 @@ package net.nemerosa.ontrack.boot.support
 
 import net.nemerosa.ontrack.boot.ui.settings.UIMode
 import net.nemerosa.ontrack.boot.ui.settings.UISettings
+import net.nemerosa.ontrack.boot.ui.settings.UISettingsProperties
 import net.nemerosa.ontrack.model.security.SecurityService
 import net.nemerosa.ontrack.model.settings.CachedSettingsService
 import net.nemerosa.ontrack.model.settings.getCachedSettings
@@ -26,7 +27,8 @@ class WebConfig(
         private val securityService: SecurityService,
         private val resourceModules: List<ResourceModule>,
         private val taskExecutorBuilder: TaskExecutorBuilder,
-        private val cachedSettingsService: CachedSettingsService
+        private val cachedSettingsService: CachedSettingsService,
+        private val uiSettingsProperties: UISettingsProperties
 ) : WebMvcConfigurer {
 
     private val logger: Logger = LoggerFactory.getLogger(WebConfig::class.java)
@@ -89,7 +91,11 @@ class WebConfig(
      * Redirections at high level according to the UI mode.
      */
     override fun addViewControllers(registry: ViewControllerRegistry) {
-        val mode = cachedSettingsService.getCachedSettings<UISettings>().mode
+        val mode = if (cachedSettingsService.isAvailable) {
+            cachedSettingsService.getCachedSettings<UISettings>().mode
+        } else {
+            uiSettingsProperties.mode
+        }
         logger.info("[ui] Mode = $mode")
         if (mode.allowUINextGen) {
             registry.addViewController("/ng/").setViewName("redirect:/ng/index.html")
