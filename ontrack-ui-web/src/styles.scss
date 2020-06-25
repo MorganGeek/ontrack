@@ -1,4 +1,5 @@
 $otIconSize: 24px;
+$otIconSizeMini: 16px;
 
 @mixin ot-action {
   cursor: pointer;
@@ -15,6 +16,15 @@ $otIconSize: 24px;
   min-height: $otIconSize;
   max-width: $otIconSize;
   max-height: $otIconSize;
+}
+
+.ot-icon-mini {
+  width: $otIconSizeMini;
+  height: $otIconSizeMini;
+  min-width: $otIconSizeMini;
+  min-height: $otIconSizeMini;
+  max-width: $otIconSizeMini;
+  max-height: $otIconSizeMini;
 }
 
 /* Importing Bootstrap SCSS file. */

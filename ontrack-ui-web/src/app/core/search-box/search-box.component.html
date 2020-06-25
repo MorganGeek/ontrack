@@ -5,10 +5,18 @@
         <button id="ot-searchbox-{{boxId}}-type-button"
                 type="button"
                 class="btn btn-light"
-                ngbDropdownToggle>Any</button>
+                title="{{selectedSearchResultType.description}}"
+                ngbDropdownToggle>
+          <span *ngIf="selectedSearchResultType.feature.id">
+            <img class="ot-icon-mini" src="/extension/{{selectedSearchResultType.feature.id}}/search-icon/{{selectedSearchResultType.id}}.png"/>
+          </span>
+          {{selectedSearchResultType.name}}&nbsp;<span class="caret"></span>
+        </button>
         <div ngbDropdownMenu>
-          <button type="button" ngbDropdownItem id="ot-searchbox-{{boxId}}-type-none">Any</button>
-          <button type="button" ngbDropdownItem *ngFor="let type of searchResultTypes" id="ot-searchbox-{{boxId}}-type-{{type.id}}" [title]=type.description>
+          <button type="button" ngbDropdownItem id="ot-searchbox-{{boxId}}-type-none" on-click="selectAllSearchResultTypes()">Any</button>
+          <button type="button" ngbDropdownItem *ngFor="let type of searchResultTypes"
+                  on-click="selectSearchResultType(type)"
+                  id="ot-searchbox-{{boxId}}-type-{{type.id}}" [title]=type.description>
             <img class="ot-icon" src="/extension/{{type.feature.id}}/search-icon/{{type.id}}.png"/>
             {{type.name}}
           </button>

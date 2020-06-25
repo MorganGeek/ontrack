@@ -9,6 +9,15 @@ export class SearchService {
 
   loading: boolean;
 
+  defaultResultType: SearchResultType = {
+    feature: {
+      id: ""
+    },
+    id: "",
+    name: "Any",
+    description: "Searching in all entities"
+  };
+
   constructor(private apollo: Apollo) {
   }
 
