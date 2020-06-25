@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import gql from "graphql-tag";
+import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
-
-  loading: boolean;
 
   defaultResultType: SearchResultType = {
     feature: {
@@ -21,10 +21,8 @@ export class SearchService {
   constructor(private apollo: Apollo) {
   }
 
-  loadSearchResultTypes(
-    callback: (searchResultTypes: [SearchResultType]) => void
-  ): void {
-    this.apollo.query<GetSearchResultTypesPayload>({
+  loadSearchResultTypes(): Observable<[SearchResultType]> {
+    return this.apollo.query<GetSearchResultTypesPayload>({
       query: gql`
         query GetSearchResultTypes {
           searchResultTypes {
@@ -38,11 +36,7 @@ export class SearchService {
         }
       `
     })
-    .subscribe(result => {
-      this.loading = result.loading;
-      let searchResultTypes = result.data && result.data.searchResultTypes;
-      callback(searchResultTypes);
-    });
+    .pipe(map(({data}) => data.searchResultTypes));
   }
 }
 

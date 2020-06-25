@@ -18,7 +18,7 @@ export class SearchBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchService.loadSearchResultTypes(it => this.searchResultTypes = it);
+    this.searchService.loadSearchResultTypes().subscribe(types => this.searchResultTypes = types);
   }
 
   selectSearchResultType(type: SearchResultType) {
