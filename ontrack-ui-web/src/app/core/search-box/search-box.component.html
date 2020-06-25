@@ -1,4 +1,4 @@
-<form class="{{boxClass}}">
+<form class="{{boxClass}}" [formGroup]="searchForm" (ngSubmit)="submitSearch()" novalidate>
   <div class="input-group">
     <div class="input-group-prepend">
       <div ngbDropdown class="d-inline-block">
@@ -27,6 +27,7 @@
            id="ot-searchbox-{{boxId}}-token"
            class="form-control"
            placeholder="Search..."
+           formControlName="token"
            aria-label="Text input with dropdown for the search">
     <div class="input-group-append">
       <button class="btn btn-light" type="submit" id="ot-searchbox-{{boxId}}-button" title="Launches the search">

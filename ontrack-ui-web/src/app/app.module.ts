@@ -13,6 +13,7 @@ import {UserMenuComponent} from "./core/user-menu/user-menu.component";
 
 import {HomePageComponent} from "./page/home-page/home-page.component";
 import {ProjectPageComponent} from "./page/project-page/project-page.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {ProjectPageComponent} from "./page/project-page/project-page.component";
     AppRoutingModule,
     NgbModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
