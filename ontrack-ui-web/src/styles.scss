@@ -1,10 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+$otIconSize: 24px;
+
 @mixin ot-action {
   cursor: pointer;
 }
 
 .ot-action {
   @include ot-action;
+}
+
+.ot-icon {
+  width: $otIconSize;
+  height: $otIconSize;
+  min-width: $otIconSize;
+  min-height: $otIconSize;
+  max-width: $otIconSize;
+  max-height: $otIconSize;
 }
 
 /* Importing Bootstrap SCSS file. */

@@ -8,7 +8,10 @@
                 ngbDropdownToggle>Any</button>
         <div ngbDropdownMenu>
           <button type="button" ngbDropdownItem id="ot-searchbox-{{boxId}}-type-none">Any</button>
-          <button type="button" ngbDropdownItem>Project</button>
+          <button type="button" ngbDropdownItem *ngFor="let type of searchResultTypes" id="ot-searchbox-{{boxId}}-type-{{type.id}}" [title]=type.description>
+            <img class="ot-icon" src="/extension/{{type.feature.id}}/search-icon/{{type.id}}.png"/>
+            {{type.name}}
+          </button>
         </div>
       </div>
     </div>
