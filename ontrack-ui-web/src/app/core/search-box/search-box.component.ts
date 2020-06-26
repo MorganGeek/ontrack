@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchResultType, SearchService} from "../../service/search.service";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'ot-search-box',
@@ -17,7 +18,11 @@ export class SearchBoxComponent implements OnInit {
 
   searchForm: FormGroup;
 
-  constructor(private searchService: SearchService, private formBuilder: FormBuilder) {
+  constructor(
+    private searchService: SearchService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {
     this.searchForm = formBuilder.group(new SearchForm());
   }
 
@@ -37,7 +42,14 @@ export class SearchBoxComponent implements OnInit {
     const data: SearchForm = Object.assign({}, this.searchForm.value);
     const token = data.token
     const type = this.selectedSearchResultType.id
-    // TODO Go to the search page with the token & type
+    // Go to the search page with the token & type
+    // noinspection JSIgnoredPromiseFromCall
+    this.router.navigate(["/search"], {
+      queryParams: {
+        type: type,
+        token: token
+      }
+    });
   }
 }
 

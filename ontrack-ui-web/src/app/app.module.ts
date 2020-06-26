@@ -13,6 +13,8 @@ import {UserMenuComponent} from "./core/user-menu/user-menu.component";
 
 import {HomePageComponent} from "./page/home-page/home-page.component";
 import {ProjectPageComponent} from "./page/project-page/project-page.component";
+import {SearchPageComponent} from "./page/search-page/search-page.component";
+
 import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
@@ -24,7 +26,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     SearchBoxComponent,
 
     HomePageComponent,
-    ProjectPageComponent
+    ProjectPageComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,
