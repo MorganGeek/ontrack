@@ -1,0 +1,5 @@
+schema: ontrack-v4.graphql
+generates:
+  ./src/types.d.ts:
+    plugins:
+      - typescript

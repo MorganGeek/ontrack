@@ -4,7 +4,27 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Apollo Angular GraphQL
 
+### JS GraphQL helper in IntelliJ
+
 To generate the Ontrack V4 JS GraphQL helper for IntelliJ, see the file at `./.graphqlconfig`.
+
+* Start the application (possibly on an empty database)
+* Run the configuration from the `./.graphqlconfig` file
+* This generates a `ontrack-v4.graphql` file at the root of the workspace
+
+### Typescript types
+
+Copy the `ontrack-v4.graphql` file generated previously into `ontrack-ui-web`.
+
+Run:
+
+```bash
+npm run generate
+```
+
+This generates the `ontrack-ui-web/src/types.d.ts` file, which must be under version control.
+
+### Apollo fragments
 
 To generate the Apollo fragment files:
 
