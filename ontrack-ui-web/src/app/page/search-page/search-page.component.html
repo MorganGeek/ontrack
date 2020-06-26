@@ -1,4 +1,14 @@
-<p>search-page works!</p>
+<h3>Search results</h3>
 
-<p>token: {{token}}</p>
-<p>type: {{type}}</p>
+<p>results: {{results}}</p>
+
+<div [hidden]="loading || !results">
+  <dl *ngFor="let result of results" class="ot-search-page-result">
+    <dt>
+      <img class="ot-icon" src="extension/{{result.type.feature.id}}/search-icon/{{result.type.id}}.png"
+           title="{{result.type.name}}"/>
+      <a href="#">{{result.title}}</a>
+    </dt>
+    <dd [innerHTML]="result.description"></dd>
+  </dl>
+</div>
