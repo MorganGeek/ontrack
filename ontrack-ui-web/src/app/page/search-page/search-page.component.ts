@@ -37,7 +37,7 @@ export class SearchPageComponent implements OnInit {
 
   launchSearch() {
     this.loading = true;
-    this.apollo.query<SearchResultPaginated>({
+    this.apollo.query<{search: SearchResultPaginated}>({
       query: gql`
         query Search($token: String!, $type: String, $offset: Int!, $size: Int!) {
           search(token: $token, type: $type, offset: $offset, size: $size) {
@@ -80,9 +80,9 @@ export class SearchPageComponent implements OnInit {
       }
     }).subscribe(result => {
       this.loading = false;
-      this.nextPage = result.data && result.data.pageInfo?.nextPage;
-      if (result.data.pageItems) {
-        this.results.push(...result.data.pageItems);
+      this.nextPage = result.data && result.data.search.pageInfo?.nextPage;
+      if (result.data.search.pageItems) {
+        this.results.push(...result.data.search.pageItems);
       }
     });
   }
