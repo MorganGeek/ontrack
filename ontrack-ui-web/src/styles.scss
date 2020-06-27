@@ -5,6 +5,12 @@ $otIconSizeMini: 16px;
   cursor: pointer;
 }
 
+
+@mixin ot-description {
+  font-style: italic;
+  color: #808080;
+}
+
 .ot-action {
   @include ot-action;
 }

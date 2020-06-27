@@ -1,0 +1,7 @@
+@import "styles";
+
+dl.ot-search-page-result {
+  dd {
+    @include ot-description;
+  }
+}

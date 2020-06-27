@@ -5,7 +5,7 @@
 <div [hidden]="loading || !results">
   <dl *ngFor="let result of results" class="ot-search-page-result">
     <dt>
-      <img class="ot-icon" src="extension/{{result.type.feature.id}}/search-icon/{{result.type.id}}.png"
+      <img class="ot-icon" src="/extension/{{result.type.feature.id}}/search-icon/{{result.type.id}}.png"
            title="{{result.type.name}}"/>
       <a href="#">{{result.title}}</a>
     </dt>
