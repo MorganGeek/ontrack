@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import gql from "graphql-tag";
+import {Project} from "../../../types";
 
 @Component({
   selector: 'ot-home-page',
@@ -10,13 +11,13 @@ import gql from "graphql-tag";
 export class HomePageComponent implements OnInit {
 
   loading: boolean;
-  projects: [GetHomePageProject];
+  projects: Array<Project>;
 
   constructor(private apollo: Apollo) {
   }
 
   ngOnInit(): void {
-    this.apollo.query<GetHomePageResponse>({
+    this.apollo.query<{projects: Array<Project>}>({
       query: gql`
         query GetHomePage {
           projects {
@@ -28,18 +29,8 @@ export class HomePageComponent implements OnInit {
     })
     .subscribe(result => {
       this.loading = result.loading;
-      this.projects = result.data && result.data.projects;
+      this.projects = result.data.projects;
     });
   }
 
-}
-
-type GetHomePageResponse = {
-  projects: [GetHomePageProject];
-}
-
-// TODO Use the generated GraphQL types instead
-type GetHomePageProject = {
-  id: string;
-  name: string;
 }

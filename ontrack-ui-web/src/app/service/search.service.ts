@@ -3,6 +3,7 @@ import {Apollo} from "apollo-angular";
 import gql from "graphql-tag";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {SearchResultType} from "../../types";
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,7 @@ import {Observable} from "rxjs";
 export class SearchService {
 
   defaultResultType: SearchResultType = {
-    feature: {
-      id: ""
-    },
+    feature: null,
     id: "",
     name: "Any",
     description: "Searching in all entities"
@@ -21,8 +20,8 @@ export class SearchService {
   constructor(private apollo: Apollo) {
   }
 
-  loadSearchResultTypes(): Observable<[SearchResultType]> {
-    return this.apollo.query<GetSearchResultTypesPayload>({
+  loadSearchResultTypes(): Observable<Array<SearchResultType>> {
+    return this.apollo.query<{ searchResultTypes: Array<SearchResultType> }>({
       query: gql`
         query GetSearchResultTypes {
           searchResultTypes {
@@ -38,21 +37,4 @@ export class SearchService {
     })
     .pipe(map(({data}) => data.searchResultTypes));
   }
-}
-
-// TODO Use generates types
-
-type GetSearchResultTypesPayload = {
-  searchResultTypes: [SearchResultType]
-}
-
-export type SearchResultType = {
-  feature: SearchResultTypeFeature,
-  id: string,
-  name: string,
-  description: string
-}
-
-export type SearchResultTypeFeature = {
-  id: string
 }

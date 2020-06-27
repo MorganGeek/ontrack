@@ -7,7 +7,7 @@
                 class="btn btn-light"
                 title="{{selectedSearchResultType.description}}"
                 ngbDropdownToggle>
-          <span *ngIf="selectedSearchResultType.feature.id">
+          <span *ngIf="selectedSearchResultType.feature">
             <img class="ot-icon-mini" src="/extension/{{selectedSearchResultType.feature.id}}/search-icon/{{selectedSearchResultType.id}}.png"/>
           </span>
           {{selectedSearchResultType.name}}&nbsp;<span class="caret"></span>

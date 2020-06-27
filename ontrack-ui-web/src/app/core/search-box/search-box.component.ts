@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchResultType, SearchService} from "../../service/search.service";
+import {SearchService} from "../../service/search.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import {SearchResultType} from "../../../types";
 
 @Component({
   selector: 'ot-search-box',
@@ -13,7 +14,7 @@ export class SearchBoxComponent implements OnInit {
   boxId: string;
   boxClass: string = "form-inline";
 
-  searchResultTypes: [SearchResultType]
+  searchResultTypes: Array<SearchResultType>;
   selectedSearchResultType: SearchResultType = this.searchService.defaultResultType
 
   searchForm: FormGroup;
