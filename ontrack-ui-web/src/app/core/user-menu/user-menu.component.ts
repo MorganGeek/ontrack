@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import gql from "graphql-tag";
+import {UiMenuAction, UiMenuUriAction, User} from "../../../types";
 
 @Component({
   selector: 'ot-user-menu',
@@ -11,7 +12,7 @@ export class UserMenuComponent implements OnInit {
 
   loading: boolean;
   userName: string;
-  uiActions: [UserMenuUIAction];
+  uiActions: Array<UiMenuAction>;
 
   menuBarVisible: boolean = false;
 
@@ -19,7 +20,7 @@ export class UserMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apollo.query<UserMenuResponse>({
+    this.apollo.query<{user: User}>({
       query: gql`
         query GetUser {
           user {
@@ -58,67 +59,16 @@ export class UserMenuComponent implements OnInit {
     });
   }
 
-  isUri(uiAction: UserMenuUIAction): uiAction is UserMenuUIURIAction {
-    return !!(uiAction as UserMenuUIURIAction).uri;
+  isUri(uiAction: UiMenuAction): uiAction is UiMenuUriAction {
+    return !!(uiAction as UiMenuUriAction).uri;
   }
 
-  getUri(uiAction: UserMenuUIAction): string {
-    return (uiAction as UserMenuUIURIAction).uri;
+  getUri(uiAction: UiMenuUriAction): string {
+    return (uiAction as UiMenuUriAction).uri;
   }
 
   toggleMenu(): void {
     this.menuBarVisible = !this.menuBarVisible;
   }
 
-}
-
-type UserMenuResponse = {
-  user: UserMenuUser;
-}
-
-type UserMenuUser = {
-  account: UserMenuAccount
-  uiMenuActions: [UserMenuUIAction]
-};
-
-type UserMenuAccount = {
-  fullName: string;
-}
-
-interface UserMenuUIAction {
-  id: string;
-  name: string;
-  description: string;
-  icon: String;
-}
-
-class UserMenuUIURIAction implements UserMenuUIAction {
-  uri: string;
-  description: string;
-  icon: String;
-  id: string;
-  name: string;
-}
-
-class UserMenuUIPageAction implements UserMenuUIAction {
-  page: UIPage;
-  description: string;
-  icon: String;
-  id: string;
-  name: string;
-}
-
-type ExtensionFeature = {
-  id: string;
-}
-
-type UIPage = {
-  feature?: ExtensionFeature;
-  type: string;
-  params: [UIPageParam];
-}
-
-type UIPageParam = {
-  name: string;
-  value: string;
 }
