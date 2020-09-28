@@ -42,5 +42,5 @@ jobs:
       - run: ./gradlew versionDisplay versionFile
       
       # Unit tests
-      - run: ./gradlew test
+      - run: ./gradlew test --stacktrace
       
