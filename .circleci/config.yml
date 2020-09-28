@@ -41,3 +41,6 @@ jobs:
       # Check version
       - run: ./gradlew versionDisplay versionFile
       
+      # Unit tests
+      - run: ./gradlew test
+      
