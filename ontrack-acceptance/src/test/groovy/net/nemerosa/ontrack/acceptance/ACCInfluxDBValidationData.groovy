@@ -64,6 +64,49 @@ class ACCInfluxDBValidationData extends AcceptanceTestClient {
     }
 
     @Test
+    void 'Validation run data is timestamped with validation run time'() {
+        def p = uid("P")
+        ontrack.project(p) {
+            branch("master") {
+                validationStamp("VS")
+                build("1.0.0") {
+                    validateWithTestSummary("VS", new TestSummary(
+                            passed: 10, skipped: 1, failed: 0
+                    ), "PASSED")
+                    // Wait a bit
+                    sleep(1_000)
+                    // Revalidate
+                    validateWithTestSummary("VS", new TestSummary(
+                            passed: 10, skipped: 1, failed: 0
+                    ), "PASSED")
+                }
+            }
+        }
+        // Checks the data has been written in InfluxDB
+        def influxDB = InfluxDBFactory.connect(
+                configRule.config.influxdbUri
+        )
+        def result = influxDB.query(
+                new Query(
+                        "SELECT * " +
+                                "FROM ontrack_value_validation_data " +
+                                "WHERE project = '${p}' " +
+                                "AND branch = 'master' " +
+                                "AND validation = 'VS'",
+                        "ontrack"
+                )
+        )
+        def resultMapper = new InfluxDBResultMapper()
+        def measurements = resultMapper.toPOJO(
+                result,
+                ValidationDataMeasurement
+        )
+        assert !measurements.empty
+        def timestamps = measurements.collect {it.time }
+        assert timestamps[1] > timestamps[0]: "Second validation has a different timestamp"
+    }
+
+    @Test
     void 'Metrics validation run data is exported to InfluxDB'() {
         def p = uid("P")
         ontrack.project(p) {
@@ -130,6 +173,8 @@ class ACCInfluxDBValidationData extends AcceptanceTestClient {
         int failed
         @Column(name = "total")
         int total
+        @Column(name = "time")
+        long time
     }
 
     @Measurement(name = "ontrack_value_validation_data")
