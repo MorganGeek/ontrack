@@ -9,6 +9,9 @@ import org.influxdb.dto.Query
 import org.influxdb.impl.InfluxDBResultMapper
 import org.junit.Test
 
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 import static net.nemerosa.ontrack.test.TestUtils.uid
 
 /**
@@ -102,7 +105,7 @@ class ACCInfluxDBValidationData extends AcceptanceTestClient {
                 ValidationDataMeasurement
         )
         assert !measurements.empty
-        def timestamps = measurements.collect {new Date(it.time).getTime() }
+        def timestamps = measurements.collect { new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(it.time).getTime() }
         assert timestamps[1] > timestamps[0]: "Second validation has a different timestamp"
     }
 
