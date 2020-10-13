@@ -102,7 +102,7 @@ class ACCInfluxDBValidationData extends AcceptanceTestClient {
                 ValidationDataMeasurement
         )
         assert !measurements.empty
-        def timestamps = measurements.collect {it.time }
+        def timestamps = measurements.collect {new Date(it.time).getTime() }
         assert timestamps[1] > timestamps[0]: "Second validation has a different timestamp"
     }
 
@@ -174,7 +174,7 @@ class ACCInfluxDBValidationData extends AcceptanceTestClient {
         @Column(name = "total")
         int total
         @Column(name = "time")
-        long time
+        String time
     }
 
     @Measurement(name = "ontrack_value_validation_data")
